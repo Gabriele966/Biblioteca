@@ -55,7 +55,7 @@ public class PrestitoRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            stmt.execute("DELETE FROM prestito WHERE xidL =" +oPrestito.getLibri().getIdL() + "AND" + oPrestito.getUtente().getIdU());
+            stmt.execute("DELETE FROM prestito WHERE xidL = '" + oPrestito.getLibri().getIdL() + "' AND xidU = '" + oPrestito.getUtente().getIdU() + "'");
             System.out.println("model.dao.Prestito eliminato");
             stmt.close();
         }catch(ClassNotFoundException | SQLException e){
@@ -68,8 +68,9 @@ public class PrestitoRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            stmt.execute("UPDATE prestito SET xidL='"+ oPrestito.getLibri().getIdL()+"', xidU='"+ oPrestito.getUtente().getIdU()+"', " +
-                    "inizio= '"+ oPrestito.getInizio() +"', fine= '"+oPrestito.getFine()+"'  WHERE id =" +oPrestito.getLibri().getIdL() + "AND" + oPrestito.getUtente().getIdU());
+            stmt.execute("UPDATE prestito SET xidL = '" + oPrestito.getLibri().getIdL() + "', xidU = '" + oPrestito.getUtente().getIdU() + "', " +
+                    "inizio = '" + oPrestito.getInizio() + "', fine = '" + oPrestito.getFine() + "' " +
+                    "WHERE xidL = '" + oPrestito.getLibri().getIdL() + "' AND xidU = '" + oPrestito.getUtente().getIdU() + "'");
             System.out.println("model.dao.Prestito aggiornato");
             stmt.close();
         }catch(ClassNotFoundException | SQLException e){

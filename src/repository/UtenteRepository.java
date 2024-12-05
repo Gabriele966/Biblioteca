@@ -27,7 +27,7 @@ public class UtenteRepository {
             System.out.println("Connessione Riuscita");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti");
-            stmt.close();
+
             while (rs.next()) {
                 Utente utente = new Utente();
                 utente.setCognome(rs.getString("cognome"));
@@ -35,10 +35,12 @@ public class UtenteRepository {
                 utente.setIdU(rs.getInt("idU"));
                 lUtente.add(utente);
             }
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
         }
+
         return lUtente;
     }
 
@@ -114,6 +116,7 @@ public class UtenteRepository {
             while(rs.next()) {
                 lprestatiUtenti.add(rs.getString("nome") +" "+ rs.getInt("count"));
             }
+            stmt.close();
 
         } catch (ClassNotFoundException | SQLException e) {
             System.err.println(e.getMessage());

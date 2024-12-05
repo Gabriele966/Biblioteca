@@ -207,6 +207,7 @@ public class Main {
                 String dataFine = scanner.next();
                 LocalDate fine = LocalDate.parse(dataFine, formatter);
                 oPrestitoService.update(xidL, xidU, inzio, fine);
+                break;
             default:
                 System.out.print("dato non valido ");
                 break;
@@ -267,8 +268,9 @@ public class Main {
                 oUtenteService.delete(idU);
                 break;
             case 3:
-                System.out.print("Inserire id del Libro e Utente da eliminare: ");
+                System.out.print("Inserire id Utente da eliminare: ");
                 int idUP = scanner.nextInt();
+                System.out.print("Inserire id Libro da eliminare: ");
                 String idLP = scanner.next();
                 oPrestitoService.delete(idLP, idUP);
                 break;
