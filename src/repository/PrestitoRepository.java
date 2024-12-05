@@ -13,10 +13,11 @@ public class PrestitoRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("INSERT INTO prestito VALUES('"+oPrestito.getLibri().getIdL() +"', " +
+            stmt.execute("INSERT INTO prestito VALUES('"+oPrestito.getLibri().getIdL() +"', " +
                     "'" + oPrestito.getUtente().getIdU() + "'," +
                     "" + " '"+ oPrestito.getInizio() + "'," +
                     " '"+ oPrestito.getFine() + "')");
+            stmt.close();
         }catch (ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -42,6 +43,7 @@ public class PrestitoRepository {
                 p.setFine(LocalDate.parse(rs.getString("fine")));
                 lPrestito.add(p);
             }
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -53,8 +55,9 @@ public class PrestitoRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            ResultSet re = stmt.executeQuery("DELETE FROM prestito WHERE xidL =" +oPrestito.getLibri().getIdL() + "AND" + oPrestito.getUtente().getIdU());
+            stmt.execute("DELETE FROM prestito WHERE xidL =" +oPrestito.getLibri().getIdL() + "AND" + oPrestito.getUtente().getIdU());
             System.out.println("model.dao.Prestito eliminato");
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -65,9 +68,10 @@ public class PrestitoRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("UPDATE prestito SET xidL='"+ oPrestito.getLibri().getIdL()+"', xidU='"+ oPrestito.getUtente().getIdU()+"', " +
+            stmt.execute("UPDATE prestito SET xidL='"+ oPrestito.getLibri().getIdL()+"', xidU='"+ oPrestito.getUtente().getIdU()+"', " +
                     "inizio= '"+ oPrestito.getInizio() +"', fine= '"+oPrestito.getFine()+"'  WHERE id =" +oPrestito.getLibri().getIdL() + "AND" + oPrestito.getUtente().getIdU());
             System.out.println("model.dao.Prestito aggiornato");
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);

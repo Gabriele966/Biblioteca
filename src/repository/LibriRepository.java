@@ -13,7 +13,8 @@ public class LibriRepository {
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
             System.out.println("Connessisone Riuscita");
-            ResultSet rs = stmt.executeQuery("INSERT INTO Libri VALUES('"+oLibri.getAutore() +"', '" + oLibri.getAutore() + "', '"+ oLibri.getIdL() + "')");
+            stmt.execute("INSERT INTO Libri VALUES('"+oLibri.getAutore() +"', '" + oLibri.getAutore() + "', '"+ oLibri.getIdL() + "')");
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -35,6 +36,7 @@ public class LibriRepository {
                 oLibri.setIdL(rs.getString("idL"));
                 lLibri.add(oLibri);
             }
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -46,8 +48,9 @@ public class LibriRepository {
         try {
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("UPDATE libri SET Titolo='"+ oLibri.getTitolo()+"', Autore='"+ oLibri.getAutore()+"' WHERE id ='" +oLibri.getIdL()+ "'");
+            stmt.execute("UPDATE libri SET Titolo='"+ oLibri.getTitolo()+"', Autore='"+ oLibri.getAutore()+"' WHERE id ='" +oLibri.getIdL()+ "'");
             System.out.println("model.dao.Libri aggiornato");
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -58,8 +61,9 @@ public class LibriRepository {
         try{
             Connection c = DbConnection.openConnection();
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("DELETE FROM Libri WHERE idL='" + oLibri.getIdL()+"'");
+            stmt.execute("DELETE FROM Libri WHERE idL='" + oLibri.getIdL()+"'");
             System.out.println("model.dao.Libri eliminato");
+            stmt.close();
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);

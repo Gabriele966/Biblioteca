@@ -12,7 +12,8 @@ public class UtenteRepository {
             Connection c = DbConnection.openConnection();
             System.out.println("Connessione Riuscita");
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("INSERT INTO utenti VALUES('"+oUtente.getCognome()+"', '" + oUtente.getNome() + "')");
+            stmt.execute("INSERT INTO utenti VALUES('"+oUtente.getCognome()+"', '" + oUtente.getNome() + "')");
+            stmt.close();
         }catch (ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -26,6 +27,7 @@ public class UtenteRepository {
             System.out.println("Connessione Riuscita");
             Statement stmt = c.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT * FROM utenti");
+            stmt.close();
             while (rs.next()) {
                 Utente utente = new Utente();
                 utente.setCognome(rs.getString("cognome"));
@@ -45,9 +47,9 @@ public class UtenteRepository {
             Connection c = DbConnection.openConnection();
             System.out.println("Connessione Riuscita");
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("DELETE FROM utenti WHERE idu = '" + utente.getIdU() + "'");
+            stmt.execute("DELETE FROM utenti WHERE idu = '" + utente.getIdU() + "'");
+            stmt.close();
             System.out.println("model.dao.Utente eliminato");
-
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
             System.exit(0);
@@ -59,7 +61,8 @@ public class UtenteRepository {
             Connection c = DbConnection.openConnection();
             System.out.println("Connessione Riuscita");
             Statement stmt = c.createStatement();
-            ResultSet rs = stmt.executeQuery("UPDATE utenti SET nome='"+ oUtente.getNome()+"', cognome='"+ oUtente.getCognome()+"' WHERE idu ="  + oUtente.getIdU());
+            stmt.execute("UPDATE utenti SET nome='"+ oUtente.getNome()+"', cognome='"+ oUtente.getCognome()+"' WHERE idu ="  + oUtente.getIdU());
+            stmt.close();
             System.out.println("model.dao.Utente aggiornato");
         }catch(ClassNotFoundException | SQLException e){
             System.err.println(e.getMessage());
