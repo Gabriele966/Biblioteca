@@ -23,9 +23,18 @@ public class Main {
         System.out.println("2. Aggiorna entita");
         System.out.println("3. Visualizza la lista delle entita");
         System.out.println("4. Elimina un entita");
+        if(entita == 1) {
+            System.out.println("5. quante volte è stato prestato un libro: ");
+
+        }else if(entita == 2) {
+            System.out.println("5. Elenco dei prestiti");
+            System.out.println("6. quanti prestiti a fatto la singola persona: ");
+        }else if(entita == 3) {
+            System.out.println("5. Visualizza presititi durante uno specifico periodo");
+            System.out.println("6. Visualizza i ritardatari");
+        }
         System.out.println("9. Exit");
         System.out.print("inserisci la tua scelta: ");
-
         int sceta = scanner.nextInt();
         switch (sceta) {
             case 1:
@@ -40,12 +49,82 @@ public class Main {
             case 4:
                 delete(entita);
                 break;
+            case 5:
+                if(entita == 1) {
+                    voltePresoPrestito();
+                }else if(entita == 2) {
+                    prestiotoUtente();
+                }else{
+                    prestitoPeriodoSpecifico();
+                }
+                break;
+            case 6:
+                if(entita == 2) {
+                    quantitaPrestititUtenti();
+                }else{
+                    ritardo();
+                }
+                break;
             case 9:
-                System.out.print("Inserisci un nuova entita ");
                 break;
             default:
                 System.out.print("Scelta non valida");
                 break;
+        }
+    }
+
+    private static void voltePresoPrestito() {
+        LibriService oLibriService = new LibriService();
+        List<String> list = oLibriService.volteLibroPrestato();
+        for(String s : list){
+            System.out.println(s);
+        }
+    }
+
+    private static void quantitaPrestititUtenti() {
+        UtenteService oUtenteService = new UtenteService();
+        List<String> list = oUtenteService.quantitaPrestititUtenti();
+        for(String s : list){
+            System.out.println(s);
+        }
+    }
+
+    private static void ritardo() {
+        PrestitoService oPrestitoService = new PrestitoService();
+        List<String> list = oPrestitoService.riratdo();
+        for (String s : list) {
+            System.out.println(s);
+        }
+    }
+
+    private static void prestitoPeriodoSpecifico() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("le date vanno inserite nel formato gg/mm/aaaa");
+        System.out.println("inserire data inizio: ");
+        String inizo = scanner.nextLine();
+        System.out.println("inserire data fine: ");
+        String fine = scanner.nextLine();
+        PrestitoService oPrestitoService = new PrestitoService();
+        List<String> list = oPrestitoService.prestitoPeriodoSpecifico(inizo, fine);
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i));
+        }
+    }
+
+
+
+
+    private static void prestiotoUtente() {
+        UtenteService oUtenteService = new UtenteService();
+        List<String> list = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Inserisci cognome utente: ");
+        String cognome = scanner.next();
+        System.out.println("inseirsci nome utente: ");
+        String nome = scanner.next();
+        list = oUtenteService.prestiotoUtente(cognome);
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i));
         }
     }
 

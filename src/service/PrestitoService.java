@@ -3,7 +3,9 @@ import model.Libri;
 import model.Prestito;
 import model.Utente;
 import repository.PrestitoRepository;
+import java.time.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.time.LocalDate;
 
@@ -52,6 +54,14 @@ public void delete(String xidL, int xidU) {
 
 
 
+public List<String> prestitoPeriodoSpecifico(String inizio, String fine) {
+    List<String> lPrestito = oPrestitoRepository.prestitoPeriodoSpecifico(inizio, fine);
+    return lPrestito;
+}
+
+public List<String> riratdo(){
+        return oPrestitoRepository.riratdoPrestito();
+}
 
 
 

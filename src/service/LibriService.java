@@ -30,4 +30,7 @@ public class LibriService {
         oLibri.setIdL(idL);
         oLibriRepository.deleteLibri(oLibri);
     }
+
+
+    public List<String> volteLibroPrestato(){return oLibriRepository.voltePresoPrestito();}
 }

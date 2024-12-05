@@ -31,5 +31,15 @@ public class UtenteService {
         oUtenteRepository.deleteUtente(oUtente);
     }
 
+    public List<String> prestiotoUtente(String cognome){
+        List<String> list =new ArrayList<>();
+        Utente oUtente = new Utente();
+        oUtente.setCognome(cognome);
+        list = oUtenteRepository.prestiotoUtente(oUtente);
+        return list;
+    }
+
+    public List<String> quantitaPrestititUtenti(){return oUtenteRepository.quantitaPrestititUtenti();}
+
 
 }

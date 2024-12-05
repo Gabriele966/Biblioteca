@@ -68,7 +68,50 @@ public class LibriRepository {
             System.err.println(e.getMessage());
             System.exit(0);
         }
+    }
 
+    public List<String> voltePresoPrestito(){
+        List<String> list = new ArrayList<>();
+        try{
+            Connection c = DbConnection.openConnection();
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT lb.titolo, COUNT(pr.xidl)\n" +
+                    "FROM prestito AS pr\n" +
+                    "JOIN libri lb ON lb.idl = pr.xidl\n" +
+                    "GROUP BY(lb.titolo)\n" +
+                    "ORDER BY (COUNT (pr.xidl)) DESC;");
+            while(rs.next()){
+                list.add(rs.getString("titolo") +" "+ rs.getString("count"));
+            }
+            stmt.close();
+
+        }catch(ClassNotFoundException | SQLException e){
+            System.err.println(e.getMessage());
+            System.exit(0);
+
+        }
+        return list;
+    }
+
+    public List<String>  quantitaPrestititUtenti(){
+        List<String> lprestatiUtenti = new ArrayList<>();
+        try{
+            Connection c = DbConnection.openConnection();
+            System.out.println("Connessione Riuscita");
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ut.nome, COUNT(pr.xidl)\n" +
+                    "FROM prestito AS pr\n" +
+                    "JOIN utenti ut on ut.idu = pr.xidu \n" +
+                    "GROUP BY ( ut.nome)\n" +
+                    "ORDER BY (COUNT((pr.xidl))) DESC;");
+            while(rs.next()) {
+                lprestatiUtenti.add(rs.getString("nome") +" "+ rs.getInt("count"));
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        return lprestatiUtenti;
     }
 
 }

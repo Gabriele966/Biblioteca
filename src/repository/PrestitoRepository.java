@@ -78,6 +78,57 @@ public class PrestitoRepository {
         }
     }
 
+    public List<String> riratdoPrestito() {
+        List<String> lPrestito = new ArrayList<>();
+        try{
+            Connection c = DbConnection.openConnection();
+            Statement stmt =c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ut.cognome, ut.nome, lb.Titolo\n" +
+                    "FROM libri as lb\n" +
+                    "JOIN Prestito pr on pr.xidl = lb.idl\n" +
+                    "JOIN Utenti ut on ut.idU = Pr.xidu\n" +
+                    "WHERE pr.inizio + 15 < pr.fine;");
+            while (rs.next()) {
+                String cognome = rs.getString("cognome");
+                String nome = rs.getString("nome");
+                String titolo = rs.getString("titolo");
+                lPrestito.add(cognome + " " + nome + " " + titolo);
+            }
+            stmt.close();
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        return lPrestito;
+    }
+
+
+    public List<String> prestitoPeriodoSpecifico(String ini, String fin){
+        List<String> lPrestito = new ArrayList<>();
+        try{
+            Connection c = DbConnection.openConnection();
+            Statement stmt = c.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT ut.cognome, ut.nome, lb.Titolo, pr.inizio, pr.fine " +
+                    "FROM libri AS lb " +
+                    "JOIN prestito pr ON pr.xidl = lb.idl " +
+                    "JOIN utenti ut ON ut.idu = pr.xidu " +
+                    "WHERE pr.inizio > '" + ini + "' AND pr.fine < '" + fin + "';");
+            while (rs.next()) {
+                String cognome = rs.getString("cognome");
+                String nome = rs.getString("nome");
+                String titolo = rs.getString("titolo");
+                lPrestito.add(cognome +" " + nome + " " + titolo);
+            }
+            stmt.close();
+        }catch(ClassNotFoundException | SQLException e){
+            System.err.println(e.getMessage());
+            System.exit(0);
+        }
+        return lPrestito;
+    }
+
+
 
 
 
